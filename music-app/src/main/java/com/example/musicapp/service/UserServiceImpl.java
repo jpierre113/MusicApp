@@ -3,6 +3,7 @@ package com.example.musicapp.service;
 import com.example.musicapp.models.User;
 import com.example.musicapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,8 +28,9 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public void deleteById(Long userId) {
+    public HttpStatus deleteById(Long userId) {
         userRepository.deleteById(userId);
+        return null;
     }
 
     @Override
