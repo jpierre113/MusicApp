@@ -49,4 +49,25 @@ public class User {
 //    public User updateUser(User user) {
 //        return user;
 //    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_profile_id")
+    private UserProfile userProfile;
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    @ManyToOne(cascade = {CascadeType.DETACH,
+            CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "user_role_id", nullable = false)
+    private UserRole userRole;
+
+    public UserRole getUserRole() { return userRole; }
+
+    public void setUserRole(UserRole userRole) { this.userRole = userRole; }
 }
