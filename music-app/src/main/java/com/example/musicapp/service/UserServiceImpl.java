@@ -30,4 +30,9 @@ public class UserServiceImpl implements UserService {
     public void deleteById(Long userId) {
         userRepository.deleteById(userId);
     }
+
+    @Override
+    public User login(String username, String password) {
+        return userRepository.login(username, password);
+    }
 }
