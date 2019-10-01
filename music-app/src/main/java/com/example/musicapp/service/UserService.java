@@ -9,6 +9,6 @@ public interface UserService {
     public User createUser(User newUser);
     public HttpStatus deleteById(Long userId);
     public User login(String username, String password);
-
+    public User getUser(String username); //added for UserProfileImpl line 20 getUser
 }
 
