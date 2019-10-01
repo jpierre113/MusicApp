@@ -60,7 +60,7 @@ public class User {
     public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
-    
+
     public Long getId() {
         return id;
     }
