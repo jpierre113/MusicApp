@@ -1,18 +1,57 @@
 package com.example.musicapp.service;
 
+import com.example.musicapp.config.JwtUtil;
 import com.example.musicapp.models.User;
 import com.example.musicapp.models.UserRole;
 import com.example.musicapp.repository.UserRepository;
 import com.example.musicapp.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    JwtUtil jwtUtil;
+
+    @Autowired
+    @Qualifier("encoder")
+    PasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = getUser(username);
+
+        if(user==null)
+            throw new UsernameNotFoundException("User null");
+
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), bCryptPasswordEncoder.encode(user.getPassword()),
+                true, true, true, true, getGrantedAuthorities(user));
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(User user){
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        authorities.add(new SimpleGrantedAuthority(user.getUserRole().getName()));
+
+        return authorities;
+    }
+
 
     @Override
     public Iterable<User> listUsers() {
@@ -28,8 +67,8 @@ public class UserServiceImpl implements UserService {
     }
 
 //    @Override
-//    public User updateUser(User user) {
-//        return userRepository.update(user);
+//    public User updateUserById(Long userId) {
+//        return userRepository.update(userId);
 //    }
 
     @Override

@@ -4,6 +4,7 @@ import com.example.musicapp.models.Song;
 import com.example.musicapp.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,5 +23,10 @@ public class SongController {
     @GetMapping("/list")
     public Iterable<Song> listSongs() {
         return songService.listSongs();
+    }
+
+    @DeleteMapping("/song/{songId}")
+    public HttpStatus deleteSongById(@PathVariable int songId) {
+        return songService.deleteById(songId);
     }
 }
