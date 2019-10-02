@@ -96,9 +96,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRoleService userRoleService;
 
+    /**
+     *
+     * @param username
+     * @param songId
+     * @return
+     * find song by id and get it find user by username, under user add the song
+     * save song to the user
+     */
     @Override
-    public User addSong(String username, int courseId) {
-        Song song = songRepository.findById(courseId).get();
+    public User addSong(String username, int songId) {
+        Song song = songRepository.findById(songId).get();
         User user = getUser(username);
         user.addSong(song);
 

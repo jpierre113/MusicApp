@@ -13,6 +13,6 @@ public interface SongService {
 
     public HttpStatus deleteById(int songId);
 
-    public User addSong(String username, int songId);
+
 
 }
