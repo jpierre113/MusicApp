@@ -1,6 +1,7 @@
 package com.example.musicapp.service;
 
 import com.example.musicapp.models.Song;
+import com.example.musicapp.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -11,4 +12,7 @@ public interface SongService {
     public Iterable<Song> listSongs();
 
     public HttpStatus deleteById(int songId);
+
+    public User addSong(String username, int songId);
+
 }
