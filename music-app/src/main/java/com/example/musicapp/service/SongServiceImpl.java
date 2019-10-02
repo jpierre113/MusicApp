@@ -23,6 +23,9 @@ public class SongServiceImpl implements SongService {
     @Autowired
     SongService songService;
 
+    @Autowired
+    UserServiceImpl userServiceImpl;
+
     @Override
     public Song createSong(Song song){
         return songRepository.save(song);

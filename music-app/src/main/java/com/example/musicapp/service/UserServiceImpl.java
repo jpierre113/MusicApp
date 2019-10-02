@@ -1,8 +1,10 @@
 package com.example.musicapp.service;
 
 import com.example.musicapp.config.JwtUtil;
+import com.example.musicapp.models.Song;
 import com.example.musicapp.models.User;
 import com.example.musicapp.models.UserRole;
+import com.example.musicapp.repository.SongRepository;
 import com.example.musicapp.repository.UserRepository;
 import com.example.musicapp.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private SongRepository songRepository;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -66,6 +71,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(newUser);
     }
 
+
 //    @Override
 //    public User updateUserById(Long userId) {
 //        return userRepository.update(userId);
@@ -89,5 +95,14 @@ public class UserServiceImpl implements UserService {
     }
     @Autowired
     UserRoleService userRoleService;
+
+    @Override
+    public User addSong(String username, int courseId) {
+        Song song = songRepository.findById(courseId).get();
+        User user = getUser(username);
+        user.addSong(song);
+
+        return userRepository.save(user);
+    }
 
 }
