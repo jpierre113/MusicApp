@@ -38,4 +38,5 @@ public class UserController {
     public HttpStatus deleteUserById(@PathVariable Long userId) {
         return userService.deleteById(userId);
     }
+
 }
