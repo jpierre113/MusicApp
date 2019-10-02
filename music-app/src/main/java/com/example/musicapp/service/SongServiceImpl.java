@@ -3,7 +3,9 @@ package com.example.musicapp.service;
 import com.example.musicapp.models.Song;
 import com.example.musicapp.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SongServiceImpl implements SongService {
 
     @Autowired
