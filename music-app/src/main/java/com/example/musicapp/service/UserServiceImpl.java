@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     //gets the role, assigns the role to user and creates the user in the database
-    public User createUser(User newUser) {
+    public String createUser(User newUser) {
         UserRole userRole = userRoleService.getRole("DBA");
         newUser.setUserRole(userRole);
         return userRepository.save(newUser);
