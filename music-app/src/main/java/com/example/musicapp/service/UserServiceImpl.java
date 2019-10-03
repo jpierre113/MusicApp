@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,13 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
-    private UserRoleRepository userRoleRepository;
+    UserRoleRepository userRoleRepository;
 
     @Autowired
-    private SongRepository songRepository;
+    SongRepository songRepository;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -84,9 +85,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password) {
-        System.out.println("hi");
-        return userRepository.login(username, password);
+    public String login(User user) {
+        return userRepository.login(@RequestBody user);
     }
 
     @Override
