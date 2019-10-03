@@ -18,8 +18,8 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public UserProfile createUserProfile(String username, UserProfile newProfile) {
         User user = userService.getUser(username);
-        user.setUserProfile(newProfile);
-        return userService.createUser(user).getUserProfile();
+        newProfile.setUser(user);
+        return userProfileRepository.save(newProfile);
     }
 
     @Override

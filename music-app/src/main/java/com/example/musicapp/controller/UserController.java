@@ -21,22 +21,21 @@ public class UserController {
     }
 
     @GetMapping("/user/list")
-    public Iterable<User> listUsers(){
+    public Iterable<User> listUsers() {
         return userService.listUsers();
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@RequestBody User newUser) {
         return ResponseEntity.ok(new JwtResponse(userService.createUser(newUser)));
+    }
 
-//    @GetMapping("/login/{username}/{password}")
-//    public User login(@PathVariable String username, @PathVariable String password) {
-//        return userService.login(username, password);
-//    }
 
     @DeleteMapping("/user/{userId}")
-        public HttpStatus deleteUserById(@PathVariable Long userId) {
-            return userService.deleteById(userId);
-        }
+    public HttpStatus deleteUserById(@PathVariable Integer userId) {
+         userService.deleteById(userId);
+            return HttpStatus.OK;
+    }
 
-}
+    }
+
