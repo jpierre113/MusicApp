@@ -64,11 +64,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    //gets the role, assigns the role to user and creates the user in the database
     public String createUser(User newUser) {
-        UserRole userRole = userRoleService.getRole("DBA");
+        UserRole userRole = userRoleService.getRole(newUser.getUserRole().getName());
         newUser.setUserRole(userRole);
-        return userRepository.save(newUser);
+        newUser.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
+        if(userRepository.save(newUser) != null){
+            UserDetails userDetails = loadUserByUsername(newUser.getUsername());
+            return jwtUtil.generateToken(userDetails);
+        }
+        return null;
     }
 
 
@@ -78,16 +82,29 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public HttpStatus deleteById(Long userId) {
+    public HttpStatus deleteById(Integer userId) {
         userRepository.deleteById(userId);
+        return HttpStatus.OK;
+    }
+
+
+
+    @Override
+    public String login(User user){
+        User newUser = userRepository.findByUsername(user.getUsername());
+        //userRepository.login(user.getUsername(), user.getPassword()) != null
+        if(newUser != null && bCryptPasswordEncoder.matches(user.getPassword(), newUser.getPassword())){
+            UserDetails userDetails = loadUserByUsername(newUser.getUsername());
+            return jwtUtil.generateToken(userDetails);
+        }
         return null;
     }
 
-    @Override
-    public User login(String username, String password) {
-        System.out.println("hi");
-        return userRepository.login(username, password);
-    }
+
+
+
+
+
 
     @Override
     public User getUser(String username) {
