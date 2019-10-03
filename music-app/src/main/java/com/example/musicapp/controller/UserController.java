@@ -1,6 +1,7 @@
 package com.example.musicapp.controller;
 
 //import com.example.musicapp.model.JwtResponse;
+import com.example.musicapp.models.JwtResponse;
 import com.example.musicapp.models.User;
 import com.example.musicapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody User user) {
-//        return ResponseEntity.ok(new JwtResponse(userService.login(user)));
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User user) {
+        return ResponseEntity.ok(new JwtResponse(userService.login(user)));
+    }
 
     @GetMapping("/user/list")
     public Iterable<User> listUsers(){
@@ -25,18 +26,17 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public User createUser(@RequestBody User newUser) {
-        return userService.createUser(newUser);
-    }
+    public ResponseEntity<?> createUser(@RequestBody User newUser) {
+        return ResponseEntity.ok(new JwtResponse(userService.createUser(newUser)));
 
-    @GetMapping("/login/{username}/{password}")
-    public User login(@PathVariable String username, @PathVariable String password) {
-        return userService.login(username, password);
-    }
+//    @GetMapping("/login/{username}/{password}")
+//    public User login(@PathVariable String username, @PathVariable String password) {
+//        return userService.login(username, password);
+//    }
 
     @DeleteMapping("/user/{userId}")
-    public HttpStatus deleteUserById(@PathVariable Long userId) {
-        return userService.deleteById(userId);
-    }
+        public HttpStatus deleteUserById(@PathVariable Long userId) {
+            return userService.deleteById(userId);
+        }
 
 }
