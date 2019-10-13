@@ -15,6 +15,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    public UserProfileServiceImpl(UserService userService, UserProfileRepository userProfileRepository){
+        this.userService = userService;
+        this.userProfileRepository = userProfileRepository;
+    }
+
     @Override
     public UserProfile createUserProfile(String username, UserProfile newProfile) {
         User user = userService.getUser(username);
